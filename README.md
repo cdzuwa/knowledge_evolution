@@ -1,10 +1,12 @@
 # knowledge_evolution
-The official PyTorch implementation of **Knowledge Evolution in Neural Networks**.
+The official PyTorch implementation of [Knowledge Evolution in Neural Networks](https://arxiv.org/abs/2103.05152) -- CVPR 2021 Oral.
 
 ### TL;DR
 We subclass neural layers and define the mask inside the subclass. When creating a new network, we simply use our [SplitConv](https://github.com/ahmdtaha/knowledge_evolution/blob/main/layers/conv_type.py) and [SplitLinear](https://github.com/ahmdtaha/knowledge_evolution/blob/main/layers/linear_type.py) instead of the standard nn.Conv2d and nn.Linear.
 
 * To extract a slim model, I create a dummy slim network with `slim_factor=split_rate` ([such as](https://github.com/ahmdtaha/knowledge_evolution/blob/b389041ff4dd308dd8e35ebb2b01e5863d7a6924/train_KE_cls.py#L80)), then I call `utils.nets_utils.extract_slim` ([such as](https://github.com/ahmdtaha/knowledge_evolution/blob/b389041ff4dd308dd8e35ebb2b01e5863d7a6924/train_KE_cls.py#L90)) to copy the fit-hypothesis weights, from the dense network, into the slim network.
+
+![Knowledge Evolution GIF](./imgs/cvpr_2021.gif)
 
 ## Requirements
 
@@ -24,7 +26,7 @@ To train a model `python train_KE_cls.py`
 The default hyperparameters are already hard coded in the python script. However these hyperparameters can be overridden by providing at least one parameter when running the script (e.g., `python train_KE_cls.py --name exp_name`) 
 
 
-The Flower102Pytorch loader (`data>flower.py`) works directly with this [Flower102 dataset](https://drive.google.com/file/d/1ftEUxDIS_VOcx_OO70QDfZvHNDxXXgRY/view?usp=sharing). This is the original flower102, but with an extra `list` directory that contains csv files for trn, val and tst splits. Feel free to download the flower dataset from [oxford website](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/), just update `data>flower.py` accordingly. 
+The Flower102Pytorch loader (`data>flower.py`) works directly with this [Flower102 dataset](https://drive.google.com/file/d/1KU0SWPYRFk8SAY1IF-8JvkBnzC_PBUrw/view?usp=sharing). This is the original flower102, but with an extra `list` directory that contains csv files for trn, val and tst splits. Feel free to download the flower dataset from [oxford website](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/), just update `data>flower.py` accordingly. 
 
 The following table shows knowledge evolution in both the dense (even rows) and slim (odd rows) using Flower102 on ResNet18.
 As the number of generation increases, both the dense and slim networks' performance increases.
@@ -60,3 +62,15 @@ I want to give credit to [Vivek Ramanujan and Mitchell Wortsman's repos](https:/
     * Submit/Test Split_googlenet code commit on 19 Dec 2020
     * Submit/Test Split_densenet code commit on 20 Dec 2020
     * Repository made public on 1 Mar 2021
+    * Add Aircarfts100 dataset loader 31 Jul 2021 -- the lists dir is available [here](https://drive.google.com/file/d/1lyaro579PRFAIyBZoPpLBjCzKdvsfEH2/view?usp=sharing)
+
+
+### Citation
+```
+@inproceedings{taha2021knowledge,
+title={Knowledge Evolution in Neural Networks},
+author={Taha, Ahmed and Shrivastava, Abhinav and Davis, Larry},
+booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+year={2021}
+}
+```

@@ -21,8 +21,9 @@ class Config:
         )
 
         parser.add_argument("--optimizer", help="Which optimizer to use", default="sgd")
-        parser.add_argument("--set", help="only Flower102Pytorch is currently supported", type=str, default="Flower102Pytorch",
-                            choices=['Flower102Pytorch'])
+        parser.add_argument("--set", help="only Flower102Pytorch is currently supported",
+                            type=str, default="Flower102Pytorch",
+                            choices=['Flower102Pytorch','Aircraft100Pytorch'])
 
         parser.add_argument(
             "-a", "--arch", metavar="ARCH", default="Split_ResNet18", help="model architecture",
@@ -275,7 +276,7 @@ class Config:
         elif self.cfg.set in ['MIT67']:
             self.cfg.num_cls = 67
             self.cfg.eval_tst = False
-        elif self.cfg.set == 'Aircraft100':
+        elif self.cfg.set == 'Aircraft100' or self.cfg.set == 'Aircraft100Pytorch':
             self.cfg.num_cls = 100
             self.cfg.eval_tst = True
         else:
@@ -289,7 +290,7 @@ class Config:
         os_utils.touch_dir(self.cfg.exp_dir)
         log_file = os.path.join(self.cfg.exp_dir, self.cfg.log_file)
         logging.config.dictConfig(log_utils.get_logging_dict(log_file))
-        self.cfg.logger = logging.getLogger('train')
+        self.cfg.logger = logging.getLogger('KE')
 
         return self.cfg
 
